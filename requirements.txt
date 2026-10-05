@@ -1,0 +1,7 @@
+fastf1>=3.8
+fastapi>=0.115
+uvicorn[standard]>=0.30
+pandas>=2.2
+numpy>=2.0
+scipy>=1.13
+pyarrow>=16

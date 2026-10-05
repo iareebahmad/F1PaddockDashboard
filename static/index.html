@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>F1 Paddock</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.35.0/plotly.min.js"></script>
+  <script>
+    try { const t = localStorage.getItem("f1p-theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+  </script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="brand-mark" aria-hidden="true"></span>F1 Paddock</div>
+    <form id="picker" class="picker">
+      <label>Season <select id="sel-year"></select></label>
+      <label>Event <select id="sel-event"></select></label>
+      <label>Session <select id="sel-session"></select></label>
+      <button type="submit" id="btn-load" class="primary">Load session</button>
+    </form>
+    <div class="topbar-right">
+      <button id="btn-about" class="ghost" type="button" data-view="about">About</button>
+      <button id="btn-theme" class="ghost" type="button" aria-label="Toggle colour theme">Theme</button>
+    </div>
+  </header>
+
+  <div class="focusbar" id="focusbar" hidden>
+    <span class="focus-label">Focus drivers</span>
+    <div id="focus-chips" class="chips"></div>
+    <select id="focus-add" aria-label="Add focus driver"><option value="">+ add driver</option></select>
+    <label class="toggle"><input type="checkbox" id="team-colors"> Team colours</label>
+  </div>
+
+  <div class="layout">
+    <nav class="sidenav" id="nav"></nav>
+    <main id="main">
+      <section class="empty-state" id="welcome">
+        <h1>Formula 1, as a dataset.</h1>
+        <p>Pick a season, event and session above. Every view is backed by a documented endpoint, so
+          anything you see can be pulled into a notebook through <a href="/docs">the API</a> or downloaded as CSV / Parquet from the Data Lab.</p>
+        <ul class="feature-list">
+          <li><b>Pace statistics</b>: distributions, dispersion, Welch / Mann-Whitney / KS tests, bootstrap CIs</li>
+          <li><b>Tyre models</b>: fuel-corrected degradation with per-stint OLS and within-stint fixed effects</li>
+          <li><b>Telemetry</b>: speed, throttle, brake, gear and RPM traces, delta time, braking zones</li>
+          <li><b>Track maps</b>: mini-sector dominance and channel heat maps</li>
+          <li><b>Data Lab</b>: a model-ready lap feature table, correlation matrix and scatter explorer</li>
+          <li><b>Championship</b>: standings and round-by-round points progression</li>
+        </ul>
+        <p class="muted">The first load of a session downloads the official timing feed (30–90 s). After that it's cached on disk.</p>
+      </section>
+      <div id="view"></div>
+    </main>
+  </div>
+
+  <div class="loading" id="loading" hidden>
+    <div class="spinner" aria-hidden="true"></div>
+    <div id="loading-text">Loading…</div>
+  </div>
+  <div class="toast" id="toast" role="alert" hidden></div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
